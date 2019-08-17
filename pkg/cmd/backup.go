@@ -66,7 +66,7 @@ func runBackupCommand(flags *backupFlags) (string, error) {
 	)
 
 	if flags.File != "" {
-		logrus.Info("Backing up file %s", flags.File)
+		logrus.Infof("Backing up file %s", flags.File)
 
 		return flags.File, backupFile(flags.File, manager)
 	}

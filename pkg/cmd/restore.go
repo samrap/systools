@@ -64,7 +64,7 @@ func runRestoreCommand(flags *restoreFlags) (string, error) {
 	)
 
 	if flags.File != "" {
-		logrus.Info("Restoring file %s", flags.File)
+		logrus.Infof("Restoring file %s", flags.File)
 
 		return flags.File, restoreFile(flags.File, manager)
 	}
