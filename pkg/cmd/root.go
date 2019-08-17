@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +19,6 @@ func Execute() {
 
 	// Run the command.
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		logrus.Fatal(err)
 	}
 }
