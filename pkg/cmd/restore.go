@@ -21,6 +21,10 @@ func attachRestoreCommand(rootCmd *cobra.Command) {
 		Use:   "restore",
 		Short: "Restore a file or directory from a remote back end",
 		Run: func(cmd *cobra.Command, args []string) {
+			if err := flags.Validate(); err != nil {
+				logrus.Fatal(err)
+			}
+
 			if name, err := runRestoreCommand(flags); err != nil {
 				logrus.Fatalf("Failed to restore %s: %v", name, err)
 			} else {
@@ -29,8 +33,8 @@ func attachRestoreCommand(rootCmd *cobra.Command) {
 		},
 	}
 
-	restoreCmd.Flags().StringVarP(&flags.File, "file", "f", "", "The file to backup. Mutually exclusive to -d")
-	restoreCmd.Flags().StringVarP(&flags.Directory, "directory", "d", "", "The directory to backup. Will be stored as a gzipped file. Mutually exclusive to -f")
+	restoreCmd.Flags().StringVarP(&flags.File, "file", "f", "", "The file to restore. Mutually exclusive to -d")
+	restoreCmd.Flags().StringVarP(&flags.Directory, "directory", "d", "", "The directory to restore. Mutually exclusive to -f")
 
 	rootCmd.AddCommand(restoreCmd)
 }
@@ -46,7 +50,7 @@ func (rf *restoreFlags) Validate() error {
 	}
 
 	if rf.File == "" && rf.Directory == "" {
-		return errors.New("You must specify either a file or directory to back up")
+		return errors.New("You must specify either a file or directory to restore")
 	}
 
 	return nil
@@ -85,6 +89,7 @@ func restoreFile(filename string, manager backups.Manager) error {
 		return err
 	}
 
+	// TODO: Add metadata to lock to restore proper permissions.
 	return ioutil.WriteFile(filename, bytes, os.FileMode(0666))
 }
 
