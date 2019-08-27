@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/samrap/systools/pkg/cmd/backups"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -14,8 +15,7 @@ func Execute() {
 	}
 
 	// Attach all sub commands.
-	attachBackupCommand(rootCmd)
-	attachRestoreCommand(rootCmd)
+	backups.AttachBackupsCommand(rootCmd)
 
 	// Run the command.
 	if err := rootCmd.Execute(); err != nil {

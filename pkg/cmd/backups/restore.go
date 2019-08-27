@@ -1,4 +1,4 @@
-package cmd
+package backups
 
 import (
 	"errors"
