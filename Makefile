@@ -26,7 +26,9 @@ fmt:
 
 # Run all the linters
 lint:
-	./bin/golangci-lint run ./...
+	# golangci-lint does not seem to currently support Go 1.13. See:
+	# https://github.com/golangci/golangci-lint/issues/535
+	#./bin/golangci-lint run ./...
 	./bin/misspell -error **/*.go
 .PHONY: lint
 
